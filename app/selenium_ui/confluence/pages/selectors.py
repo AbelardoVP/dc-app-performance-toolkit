@@ -79,3 +79,7 @@ class EditorLocators:
 
     status_indicator = (By.CLASS_NAME, "status-indicator-message")
     save_spinner = (By.ID, "rte-spinner")
+
+    insert_macro_button = (By.ID, "insert-table-dropdown")
+    other_macro = (By.ID,"rte-insert-macro")
+    retro_macro = (By.ID, "macro-agile Retrospectives for Confluence")

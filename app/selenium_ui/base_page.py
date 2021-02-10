@@ -35,6 +35,12 @@ class BasePage:
         by, locator = selector_name[0], selector_name[1]
         return self.driver.find_element(by, locator)
 
+    def get_element_by_xpath(self, selector):
+        return self.driver.find_element_by_xpath(selector)
+
+    def get_element_by_selector(self, selector):
+        return self.driver.find_element_by_css_selector(selector)
+
     def get_elements(self, selector):
         selector_name = self.get_selector(selector)
         by, locator = selector_name[0], selector_name[1]
@@ -89,7 +95,7 @@ class BasePage:
         any_ec.ecs = tuple(ec.text_to_be_present_in_element(locator=origin_selector[0], text_=origin_selector[1]) for
                            origin_selector in origin_selectors)
         return self.__wait_until(expected_condition=any_ec)
-
+    
     def __wait_until(self, expected_condition, time_out=TIMEOUT):
         message = f"Error in wait_until: "
         ec_type = type(expected_condition)

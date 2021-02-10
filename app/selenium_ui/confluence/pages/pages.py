@@ -1,6 +1,6 @@
 
 from selenium_ui.base_page import BasePage
-
+from selenium.webdriver.common.keys import Keys
 from selenium_ui.confluence.pages.selectors import UrlManager, LoginPageLocators, AllUpdatesLocators, PopupLocators,\
     PageLocators, DashboardLocators, TopPanelLocators, EditorLocators
 
@@ -94,6 +94,12 @@ class Editor(BasePage):
         title_field.clear()
         title_field.send_keys(title)
 
+    def write_title_insert_macro(self):
+        title_field = self.wait_until_visible(EditorLocators.title_field)
+        title = "Selenium - Performance" + self.generate_random_string(10)
+        title_field.clear()
+        title_field.send_keys(title)
+
     def write_content(self, text=None):
         self.wait_until_available_to_switch(EditorLocators.page_content_field)
         text = self.generate_random_string(30) if not text else text
@@ -102,6 +108,33 @@ class Editor(BasePage):
                         f"tag_p.textContent += '{text}'; "
                         f"tinymce.appendChild(tag_p)")
         self.return_to_parent_frame()
+        
+
+    def insert_macro(self):
+        self.wait_until_available_to_switch(EditorLocators.page_content_field)
+        self.get_element(EditorLocators.tinymce_page_content_field).click() 
+        self.get_element_by_selector('#tinymce').click()
+        
+        # button_macro = self.get_element_by_selector('#rte-button-bullist > a > span')
+        # button_macro.click()
+        self.wait_until_visible(EditorLocators.insert_macro_button)
+
+        
+        
+        # self.get_element_by_xpath('//*[@id="rte-toolbar"]/div[2]/ul[11]').click() 
+        # self.get_element_by_xpath('//*[@id="rte-toolbar"]/div[2]/ul[11]').sendKeys(Keys.ENTER) 
+        
+
+
+        self.get_element(EditorLocators.other_macro).click() 
+        
+        # text = "performance testing message"
+        # tinymce.send_keys(text).click()
+        # self.execute_js(f"tinymce=document.getElementById('tinymce'); "
+        #                 f"tag_p = document.createElement('p'); "
+        #                 f"tag_p.setAttribute(‘id’, ‘performance-testing’)"
+        #                 f"tinymce.appendChild(tag_p)")    
+        # contet_field.clear()
 
     def click_submit(self):
         self.get_element(EditorLocators.publish_button).click()
